@@ -3,7 +3,7 @@
 #include <set>
 #include "mfile.hpp"
 
-#define A 5405
+#define A 54059
 #define B 76963 
 #define C 86969 
 
