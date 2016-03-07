@@ -1,5 +1,5 @@
-#include "tried.hpp"
-#include "tried.cpp"
+#include "MinMaxHeap.hpp"
+#include "MinMaxHeap.cpp"
 #include <iostream>
 
 using namespace std;
