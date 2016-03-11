@@ -65,8 +65,6 @@ int main(){
         int n = ((i + strength)*29)%37 + 7;
         operation *d = new operation (i, n, 3, strength, n);
         heap -> insert(*d);
-        //cout << "insert size is " << heap->size << endl;
-        //cout << (heap->getMin()).time <<"  "<<(heap->getMin()).id <<"  "<< (heap->getMin()).op<<"  "<<(heap->getMin()).strength <<"  "<< (heap->getMin()).period <<endl;
     }
     
     int M;
@@ -79,12 +77,9 @@ int main(){
         cin >> infectTime;
         
         inf_obj.set_vars(id, infectTime);
-        heap->deleteElems(inf_obj);//cout << "inf delete size is " << heap->size << endl;
-        //cout << (heap->getMin()).time <<"  "<<(heap->getMin()).id <<"  "<< (heap->getMin()).op<<"  "<<(heap->getMin()).strength <<"  "<< (heap->getMin()).period <<endl;
+        heap->deleteElems(inf_obj);
         operation *d = new operation (id, infectTime, 2, -1, -1);
         heap->insert(*d);
-        //cout << "inf insert size is " << heap->size << endl;
-        //cout << (heap->getMin()).time <<"  "<<(heap->getMin()).id <<"  "<< (heap->getMin()).op<<"  "<<(heap->getMin()).strength <<"  "<< (heap->getMin()).period <<endl;
     }
     
     int T;
@@ -104,7 +99,6 @@ int main(){
             }
             
             if (cur_op == 2){
-                // cout << cur_id << "strength is " << str[cur_id] << endl;
                 operation *d = new operation (cur_id, i + str[cur_id], 1, -1, -1);
                 inf_obj.set_vars(cur_id, i);
                 heap->deleteMin();
@@ -126,7 +120,6 @@ int main(){
                     heap->insert(*d);
                     heap->insert(*e);
                     cout << "b " << next << " " << i << endl;
-                    //cout << "parent " << cur_id << "  period" << n;
                     next += 1;
                 }
                 
@@ -136,19 +129,7 @@ int main(){
                     heap->insert(*d);
                 }
             }
-        }/*
-          cout << "end " << i << endl;
-          MinMaxHeap<operation> egg = *heap;
-          int k = 1;
-          while (egg.size){
-          cout << k << "   ";
-          cout << (egg.getMin()).time <<"  "<<(egg.getMin()).id <<"  "<< (egg.getMin()).op<<"  "<<(egg.getMin()).strength <<"  "<< (egg.getMin()).period <<endl;
-          
-          k += 1;
-          egg.deleteMin();
-          }
-          cout << endl;*/
-        
+        }        
     }
 }
 

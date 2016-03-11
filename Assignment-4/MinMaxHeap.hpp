@@ -26,9 +26,9 @@ template<class T>
 class MinMaxHeap{
 private:
     vector<T> h; //min-max heap
-      //number of elements in the min-max heap
+     int size; //number of elements in the min-max heap
     int level; //level of the next available leaf
-public:int size;
+public:
     MinMaxHeap(){
         size = 0;
         level = 0;
