@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-#include "MinMaxHeap.hpp"
+#include "minMaxHeap.hpp"
 
 using namespace std;
 

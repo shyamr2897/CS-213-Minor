@@ -1,13 +1,13 @@
 //
-//  MinMaxHeap.hpp
+//  minMaxHeap.hpp
 //  
 //
 //  Created by Shyam Ramamoorthy on 03/03/16.
 //
 //
 
-#ifndef MinMaxHeap_hpp
-#define MinMaxHeap_hpp
+#ifndef minMaxHeap_hpp
+#define minMaxHeap_hpp
 
 #include <iostream>
 #include<cmath>
@@ -210,7 +210,7 @@ public:
     }
     
     T getMin(){
-        if(size > 0) return h.front();
+        return h.front();
     }
     
     T getMax(){
@@ -245,4 +245,4 @@ public:
 };
 
 
-#endif /* MinMaxHeap_hpp */
+#endif /* minMaxHeap_hpp */
