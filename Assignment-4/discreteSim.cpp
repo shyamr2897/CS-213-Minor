@@ -133,24 +133,11 @@ int main(){
                 }
                 
                 else{
-                    //operation *d = new operation(cur_id, i + (heap->getMin()).period, 1, -1, -1);
                     cout << "d " << cur_id << " " << i << endl;
                     heap->deleteMin();
-                    //heap->insert(*d);
                 }
             }
-        }/*
-          cout << "end " << i << endl;
-          MinMaxHeap<operation> egg = *heap;
-          int k = 1;
-          while (egg.size){
-          cout << k << "   ";
-          cout << (egg.getMin()).time <<"  "<<(egg.getMin()).id <<"  "<< (egg.getMin()).op<<"  "<<(egg.getMin()).strength <<"  "<< (egg.getMin()).period <<endl;
-          
-          k += 1;
-          egg.deleteMin();
-          }
-          cout << endl;*/
+        }
     }
 }
 
