@@ -10,7 +10,6 @@
 #define minMaxHeap_hpp
 
 #include <iostream>
-#include<cmath>
 #include <vector>
 
 using namespace std;
@@ -27,11 +26,9 @@ class MinMaxHeap{
 private:
     vector<T> h; //min-max heap
     int size;//number of elements in the min-max heap
-    int level; //level of the next available leaf
 public:
     MinMaxHeap(){
         size = 0;
-        level = 0;
     }
     
     int getLevel(int pos){
@@ -78,7 +75,6 @@ public:
                 }
                 else MinMaxHeap<T>::BubbleUpMin(pos);
             }
-            
         }
         
         else {
@@ -98,8 +94,7 @@ public:
     void insert(T elem){
         h.push_back(elem);
         size += 1;
-        MinMaxHeap<T>::BubbleUp(size, level);
-        if (size == (pow(2,level+1)-1)) level += 1;
+        MinMaxHeap<T>::BubbleUp(size, getLevel(size));
     }
     
     void TrickleDownMin(int pos){
@@ -191,7 +186,6 @@ public:
             size -= 1;
             TrickleDown(1,0);
         }
-        if (size < pow(2, level) - 1) level -= 1;
     }
     
     void deleteMax(){
@@ -221,7 +215,6 @@ public:
                 }
             }
         }
-        if (size < pow(2, level) - 1) level -= 1;
     }
     
     T getMin(){
@@ -243,25 +236,17 @@ public:
                 if (pos == size) {
                     h.pop_back();
                     size -= 1;
-                    if (size < pow(2, level) - 1) level -= 1;
                     break;
                 }
                 else{
                     h[pos - 1] = h[size - 1];
                     h.pop_back();
                     size -= 1;
-                    if (size < pow(2, level) - 1) level -= 1;
                     TrickleDown(pos, getLevel(pos));
                     pos = 1;
                 }
             }
             else pos += 1;
-        }
-    }
-    void printHeap(){
-        cout << "size is " << size << "   level is " << level << endl;
-        for (int i = 0; i < size; i ++){
-            cout << i << "   " << h[i] << endl;
         }
     }
 };
