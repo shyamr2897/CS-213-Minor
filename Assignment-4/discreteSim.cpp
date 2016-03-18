@@ -55,13 +55,13 @@ int main(){
     MinMaxHeap<operation> *heap = new MinMaxHeap<operation>();
     int N;
     cin >> N;
-    vector<int> str, abc;
+    vector<int> str, init_str;
     
     for (int i = 0; i < N; i ++){
         int strength;
         cin >> strength;
         str.push_back(strength);
-        abc.push_back(strength);
+        init_str.push_back(strength);
         int n = ((i + strength)*29)%37 + 7;
         operation *d = new operation (i, n, 3, strength, n);
         heap -> insert(*d);
@@ -92,6 +92,8 @@ int main(){
         while ((heap->getMin()).time == i){
             int cur_op = (heap->getMin()).op;
             int cur_id = (heap->getMin()).id;
+            int cur_str = (heap->getMin()).strength;
+            int cur_per = (heap->getMin()).period;
             
             if (cur_op == 1){
                 cout << "d " << cur_id << " " << i << endl;
@@ -107,29 +109,48 @@ int main(){
             }
             
             if (cur_op == 3){
-                if ((heap->getMin()).strength > 0){
-                    operation *d = new operation(cur_id, i + (heap->getMin()).period, 3,
-                                                 (heap->getMin()).strength-1, (heap->getMin()).period);
-                    int n = ((next + abc[cur_id])*29)%37 + 7;
-                    operation *e = new operation(next, i + n, 3, abc[cur_id], n);
-                    str.push_back(abc[cur_id]);
-                    abc.push_back(abc[cur_id]);
+                if (cur_str > 0){
+                    int n = ((next + init_str[cur_id])*29)%37 + 7;
+                    operation *e = new operation(next, i + n, 3, init_str[cur_id], n);
+                    
+                    str.push_back(init_str[cur_id]);
+                    init_str.push_back(init_str[cur_id]);
                     
                     str[cur_id] -= 1;
                     heap->deleteMin();
-                    heap->insert(*d);
+                    
+                    if (cur_str > 1){
+                        operation *d = new operation(cur_id, i + cur_per, 3, cur_str-1, cur_per);
+                        heap->insert(*d);
+                    }
+                    else {
+                        operation *d = new operation (cur_id, i + cur_per, 1, -1, -1);
+                        heap->insert(*d);
+                    }
                     heap->insert(*e);
                     cout << "b " << next << " " << i << endl;
                     next += 1;
                 }
                 
                 else{
-                    operation *d = new operation(cur_id, i + (heap->getMin()).period, 1, -1, -1);
+                    //operation *d = new operation(cur_id, i + (heap->getMin()).period, 1, -1, -1);
+                    cout << "d " << cur_id << " " << i << endl;
                     heap->deleteMin();
-                    heap->insert(*d);
+                    //heap->insert(*d);
                 }
             }
-        }        
+        }/*
+          cout << "end " << i << endl;
+          MinMaxHeap<operation> egg = *heap;
+          int k = 1;
+          while (egg.size){
+          cout << k << "   ";
+          cout << (egg.getMin()).time <<"  "<<(egg.getMin()).id <<"  "<< (egg.getMin()).op<<"  "<<(egg.getMin()).strength <<"  "<< (egg.getMin()).period <<endl;
+          
+          k += 1;
+          egg.deleteMin();
+          }
+          cout << endl;*/
     }
 }
 
