@@ -1,6 +1,6 @@
 //
-//  minMaxHeap.hpp
-//  
+//  MinMaxHeap.hpp
+//
 //
 //  Created by Shyam Ramamoorthy on 03/03/16.
 //
@@ -26,7 +26,7 @@ template<class T>
 class MinMaxHeap{
 private:
     vector<T> h; //min-max heap
-     int size; //number of elements in the min-max heap
+    int size;//number of elements in the min-max heap
     int level; //level of the next available leaf
 public:
     MinMaxHeap(){
@@ -78,6 +78,7 @@ public:
                 }
                 else MinMaxHeap<T>::BubbleUpMin(pos);
             }
+            
         }
         
         else {
@@ -126,7 +127,14 @@ public:
             h[min_pos - 1] = temp;
             
             if (min_pos == (pos << 1) || min_pos == ((pos << 1) + 1)) return;
-            else TrickleDownMin(min_pos);
+            else{
+                if (h[(min_pos >> 1) - 1] < h[min_pos - 1]){
+                    T min_temp = h[(min_pos >> 1) - 1];
+                    h[(min_pos >> 1) - 1] = h[min_pos - 1];
+                    h[min_pos - 1] = min_temp;
+                }
+                TrickleDownMin(min_pos);
+            }
         }
     }
     
@@ -155,7 +163,14 @@ public:
             h[max_pos - 1] = temp;
             
             if (max_pos == (pos << 1) || max_pos == ((pos << 1) + 1)) return;
-            else TrickleDownMax(max_pos);
+            else{
+                if (h[max_pos - 1] < h[(max_pos >> 1) - 1]){
+                    T max_temp = h[(max_pos >> 1) - 1];
+                    h[(max_pos >> 1) - 1] = h[max_pos - 1];
+                    h[max_pos - 1] = max_temp;
+                }
+                TrickleDownMax(max_pos);
+            }
         }
     }
     
@@ -166,13 +181,13 @@ public:
     
     void deleteMin(){
         if (size == 1) {
-            h.erase(h.begin());
+            h.pop_back();
             size -= 1;
         }
         
         else{
             h[0] = h[size - 1];
-            h.erase(h.begin() + size - 1);
+            h.pop_back();
             size -= 1;
             TrickleDown(1,0);
         }
@@ -181,26 +196,26 @@ public:
     
     void deleteMax(){
         if (size == 1) {
-            h.erase(h.begin());
+            h.pop_back();
             size -= 1;
         }
         
         else {
             T temp;
             if (size == 2) {
-                h.erase(h.begin()+1);
+                h.pop_back();
                 size -= 1;
             }
             else{
                 if(h[1]< h[2]) {
                     h[2] = h[size - 1];
-                    h.erase(h.begin() + size - 1);
+                    h.pop_back();
                     size -= 1;
                     if(size >= 3) TrickleDown(3,1);
                 }
                 else {
                     h[1] = h[size - 1];
-                    h.erase(h.begin() + size - 1);
+                    h.pop_back();
                     size -= 1;
                     TrickleDown(2,1);
                 }
@@ -223,23 +238,30 @@ public:
     
     void deleteElems(Predicate<T> &predObject){
         int pos = 1;
-        Predicate<T> *predPoint = &predObject;
         while (pos <= size){
-            if (predPoint->toDelete(h[pos - 1])){
+            if (predObject.toDelete(h[pos - 1])){
                 if (pos == size) {
-                    h.erase(h.begin() + size - 1);
+                    h.pop_back();
                     size -= 1;
+                    if (size < pow(2, level) - 1) level -= 1;
                     break;
                 }
                 else{
                     h[pos - 1] = h[size - 1];
-                    h.erase(h.begin() + size - 1);
-                    TrickleDown(pos, getLevel(pos));
+                    h.pop_back();
                     size -= 1;
+                    if (size < pow(2, level) - 1) level -= 1;
+                    TrickleDown(pos, getLevel(pos));
                     pos = 1;
                 }
             }
             else pos += 1;
+        }
+    }
+    void printHeap(){
+        cout << "size is " << size << "   level is " << level << endl;
+        for (int i = 0; i < size; i ++){
+            cout << i << "   " << h[i] << endl;
         }
     }
 };
